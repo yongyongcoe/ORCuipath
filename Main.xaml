@@ -1,6 +1,6 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Main" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="652,2164.8" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:p="http://schemas.uipath.com/workflow/activities/intelligentocr" xmlns:p1="http://schemas.uipath.com/workflow/activities/intelligentocr/extraction" xmlns:p2="http://schemas.uipath.com/workflow/activities/document-processing-contracts/extraction" xmlns:p3="http://schemas.uipath.com/workflow/activities/document-processing-contracts/results" xmlns:p4="http://schemas.uipath.com/workflow/activities/document-processing-contracts/dom" xmlns:p5="http://schemas.uipath.com/workflow/activities/documentunderstanding-ml" xmlns:p6="http://schemas.uipath.com/workflow/activities/document-processing-contracts/taxonomy" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:sc="clr-namespace:System.ComponentModel;assembly=System" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:sd="clr-namespace:System.Drawing;assembly=System.Drawing" xmlns:sd1="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="Main" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="652,2133.6" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:p="http://schemas.uipath.com/workflow/activities/intelligentocr" xmlns:p1="http://schemas.uipath.com/workflow/activities/intelligentocr/extraction" xmlns:p2="http://schemas.uipath.com/workflow/activities/document-processing-contracts/results" xmlns:p3="http://schemas.uipath.com/workflow/activities/document-processing-contracts/dom" xmlns:p4="http://schemas.uipath.com/workflow/activities/document-processing-contracts/extraction" xmlns:p5="http://schemas.uipath.com/workflow/activities/document-processing-contracts/taxonomy" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Drawing;assembly=System.Drawing" xmlns:sd1="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <TextExpression.NamespacesForImplementation>
-    <scg:List x:TypeArguments="x:String" Capacity="94">
+    <scg:List x:TypeArguments="x:String" Capacity="100">
       <x:String>System.Activities</x:String>
       <x:String>System.Activities.Statements</x:String>
       <x:String>System.Activities.Expressions</x:String>
@@ -50,10 +50,14 @@
       <x:String>System.Xml.Serialization</x:String>
       <x:String>UiPath.Excel.Activities</x:String>
       <x:String>UiPath.Excel</x:String>
+      <x:String>UiPath.IntelligentOCR.Activities.DocumentClassification</x:String>
+      <x:String>UiPath.DocumentProcessing.Contracts.Classification</x:String>
+      <x:String>UiPath.DocumentProcessing.Contracts.Training</x:String>
+      <x:String>UiPath.IntelligentOCR.Activities.Training</x:String>
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
-    <sco:Collection x:TypeArguments="AssemblyReference">
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="31">
       <AssemblyReference>System.Activities</AssemblyReference>
       <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
       <AssemblyReference>mscorlib</AssemblyReference>
@@ -85,34 +89,27 @@
       <AssemblyReference>UiPath.OCR.Contracts</AssemblyReference>
       <AssemblyReference>UiPath.Excel</AssemblyReference>
       <AssemblyReference>UiPath.Excel.Activities.Design</AssemblyReference>
-    </sco:Collection>
+    </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap:VirtualizedContainerService.HintSize="650.4,2100" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap:VirtualizedContainerService.HintSize="519.2,2068.8" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
-      <Variable x:TypeArguments="p6:DocumentTaxonomy" Name="Taxonomy" />
-      <Variable x:TypeArguments="x:String" Name="DocPath">
-        <Variable.Default>
-          <Literal x:TypeArguments="x:String">C:\Users\yongyongsocute\Desktop\my_INETMS\OCRhandwriting\Order.jpg</Literal>
-        </Variable.Default>
-      </Variable>
+      <Variable x:TypeArguments="p5:DocumentTaxonomy" Name="Taxonomy" />
+      <Variable x:TypeArguments="x:String" Default="C:\Users\yongyongsocute\Desktop\my_INETMS\OCRhandwriting\Order.jpg" Name="DocPath" />
       <Variable x:TypeArguments="x:String" Name="Doctext" />
-      <Variable x:TypeArguments="p4:Document" Name="DOM" />
-      <Variable x:TypeArguments="x:String" Name="APIkey">
-        <Variable.Default>
-          <Literal x:TypeArguments="x:String">AIzaSyD-8Ilhl29pJ7Z2NzrRfEYXZdvC7d9cMOU</Literal>
-        </Variable.Default>
-      </Variable>
-      <Variable x:TypeArguments="p3:ExtractionResult" Name="ExtractionResults" />
-      <Variable x:TypeArguments="p3:ExtractionResult" Name="ValidatedResults" />
+      <Variable x:TypeArguments="p3:Document" Name="DOM" />
+      <Variable x:TypeArguments="x:String" Default="AIzaSyD-8Ilhl29pJ7Z2NzrRfEYXZdvC7d9cMOU" Name="APIkey" />
+      <Variable x:TypeArguments="p2:ExtractionResult" Name="ExtractionResults" />
+      <Variable x:TypeArguments="p2:ExtractionResult" Name="ValidatedResults" />
       <Variable x:TypeArguments="sd1:DataSet" Name="Dataset" />
+      <Variable x:TypeArguments="p2:ClassificationResult[]" Name="ClassificationResults" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <p:LoadTaxonomy DisplayName="Load Taxonomy" sap:VirtualizedContainerService.HintSize="608.8,105.6" sap2010:WorkflowViewState.IdRef="LoadTaxonomy_1" Taxonomy="[Taxonomy]" />
-    <p:DigitizeDocument ApplyOcrMigrated="False" ApplyOcrOnPdf="Auto" DegreeOfParallelism="-1" DisplayName="Digitize Document" DocumentObjectModel="[DOM]" DocumentPath="[DocPath]" DocumentText="[Doctext]" ForceApplyOCR="False" sap:VirtualizedContainerService.HintSize="608.8,297.6" sap2010:WorkflowViewState.IdRef="DigitizeDocument_1">
+    <p:LoadTaxonomy DisplayName="Load Taxonomy" sap:VirtualizedContainerService.HintSize="477.6,105.6" sap2010:WorkflowViewState.IdRef="LoadTaxonomy_1" Taxonomy="[Taxonomy]" />
+    <p:DigitizeDocument ApplyOcrMigrated="True" ApplyOcrOnPdf="Auto" DegreeOfParallelism="-1" DisplayName="Digitize Document" DocumentObjectModel="[DOM]" DocumentPath="[DocPath]" DocumentText="[Doctext]" ForceApplyOCR="False" sap:VirtualizedContainerService.HintSize="477.6,297.6" sap2010:WorkflowViewState.IdRef="DigitizeDocument_1">
       <p:DigitizeDocument.OCREngine>
         <ActivityFunc x:TypeArguments="sd:Image, scg:IEnumerable(scg:KeyValuePair(sd:Rectangle, x:String))">
           <ActivityFunc.Argument>
@@ -122,20 +119,20 @@
         </ActivityFunc>
       </p:DigitizeDocument.OCREngine>
     </p:DigitizeDocument>
-    <p1:DataExtractionScope ClassificationResult="{x:Null}" DisplayName="Data Extraction Scope" DocumentObjectModel="[DOM]" DocumentPath="[DocPath]" DocumentText="[Doctext]" DocumentTypeId="TestInvoice.NoCategory.FoodOrder" ExtractionResult="[ExtractionResults]" FormatValuesIfPossible="True" sap:VirtualizedContainerService.HintSize="608.8,521.6" sap2010:WorkflowViewState.IdRef="DataExtractionScope_1" Taxonomy="[Taxonomy]" TaxonomyConfiguration="{}{&quot;TaxonomyMappings&quot;:{&quot;UIe2de63aa7674458fa15fabc396f10f70&quot;:{&quot;DocumentTypeMappings&quot;:{&quot;TestInvoice.NoCategory.FoodOrder&quot;:{&quot;FieldMappings&quot;:{&quot;TestInvoice.NoCategory.FoodOrder.No&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.No&quot;,&quot;ExtractorTaxonomyFieldId&quot;:null,&quot;ShouldExtract&quot;:true},&quot;TestInvoice.NoCategory.FoodOrder.TableNo&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.TableNo&quot;,&quot;ExtractorTaxonomyFieldId&quot;:null,&quot;ShouldExtract&quot;:true},&quot;TestInvoice.NoCategory.FoodOrder.Date&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Date&quot;,&quot;ExtractorTaxonomyFieldId&quot;:null,&quot;ShouldExtract&quot;:true},&quot;TestInvoice.NoCategory.FoodOrder.Order&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Order&quot;,&quot;ExtractorTaxonomyFieldId&quot;:null,&quot;ShouldExtract&quot;:true},&quot;TestInvoice.NoCategory.FoodOrder.Order.Description&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Order.Description&quot;,&quot;ExtractorTaxonomyFieldId&quot;:null,&quot;ShouldExtract&quot;:true},&quot;TestInvoice.NoCategory.FoodOrder.Order.Quantity&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Order.Quantity&quot;,&quot;ExtractorTaxonomyFieldId&quot;:null,&quot;ShouldExtract&quot;:true},&quot;TestInvoice.NoCategory.FoodOrder.Order.Price&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Order.Price&quot;,&quot;ExtractorTaxonomyFieldId&quot;:null,&quot;ShouldExtract&quot;:true},&quot;TestInvoice.NoCategory.FoodOrder.Orderer&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Orderer&quot;,&quot;ExtractorTaxonomyFieldId&quot;:null,&quot;ShouldExtract&quot;:true},&quot;TestInvoice.NoCategory.FoodOrder.TotalPrice&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.TotalPrice&quot;,&quot;ExtractorTaxonomyFieldId&quot;:null,&quot;ShouldExtract&quot;:true}},&quot;ExtractorDocumentTypeId&quot;:null}}},&quot;UI0a7e32e6c01343539d9d8ef4091942ba&quot;:{&quot;DocumentTypeMappings&quot;:{&quot;TestInvoice.NoCategory.FoodOrder&quot;:{&quot;FieldMappings&quot;:{&quot;TestInvoice.NoCategory.FoodOrder.No&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.No&quot;,&quot;ExtractorTaxonomyFieldId&quot;:&quot;\&quot;invoice-no\&quot;&quot;,&quot;ShouldExtract&quot;:true},&quot;TestInvoice.NoCategory.FoodOrder.TableNo&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.TableNo&quot;,&quot;ExtractorTaxonomyFieldId&quot;:&quot;\&quot;billing-name\&quot;&quot;,&quot;ShouldExtract&quot;:true},&quot;TestInvoice.NoCategory.FoodOrder.Date&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Date&quot;,&quot;ExtractorTaxonomyFieldId&quot;:&quot;\&quot;date\&quot;&quot;,&quot;ShouldExtract&quot;:true},&quot;TestInvoice.NoCategory.FoodOrder.Order&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Order&quot;,&quot;ExtractorTaxonomyFieldId&quot;:&quot;\&quot;items\&quot;&quot;,&quot;ShouldExtract&quot;:true},&quot;TestInvoice.NoCategory.FoodOrder.Order.Description&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Order.Description&quot;,&quot;ExtractorTaxonomyFieldId&quot;:&quot;\&quot;description\&quot;&quot;,&quot;ShouldExtract&quot;:true},&quot;TestInvoice.NoCategory.FoodOrder.Order.Quantity&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Order.Quantity&quot;,&quot;ExtractorTaxonomyFieldId&quot;:&quot;\&quot;quantity\&quot;&quot;,&quot;ShouldExtract&quot;:true},&quot;TestInvoice.NoCategory.FoodOrder.Order.Price&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Order.Price&quot;,&quot;ExtractorTaxonomyFieldId&quot;:&quot;\&quot;line-amount\&quot;&quot;,&quot;ShouldExtract&quot;:true},&quot;TestInvoice.NoCategory.FoodOrder.Orderer&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Orderer&quot;,&quot;ExtractorTaxonomyFieldId&quot;:&quot;\&quot;name\&quot;&quot;,&quot;ShouldExtract&quot;:true},&quot;TestInvoice.NoCategory.FoodOrder.TotalPrice&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.TotalPrice&quot;,&quot;ExtractorTaxonomyFieldId&quot;:&quot;\&quot;total\&quot;&quot;,&quot;ShouldExtract&quot;:true}},&quot;ExtractorDocumentTypeId&quot;:&quot;\&quot;\&quot;&quot;}}}},&quot;ExtractorMinimumConfidence&quot;:{&quot;UIe2de63aa7674458fa15fabc396f10f70&quot;:&quot;0&quot;,&quot;UI0a7e32e6c01343539d9d8ef4091942ba&quot;:&quot;0&quot;},&quot;ExtractorsAliases&quot;:{},&quot;DocumentTypeOptionsByExtractor&quot;:{&quot;UIe2de63aa7674458fa15fabc396f10f70&quot;:[],&quot;UI0a7e32e6c01343539d9d8ef4091942ba&quot;:[{&quot;FieldId&quot;:&quot;&quot;,&quot;SubOptions&quot;:[{&quot;FieldId&quot;:&quot;name&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;vendor-addr&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;billing-name&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;billing-addr&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;shipping-addr&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;invoice-no&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;po-no&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;vendor-vat-no&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;date&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;tax&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;total&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;payment-terms&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;net-amount&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;due-date&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;discount&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;shipping-charges&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;payment-addr&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;billing-vat-no&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;currency&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;items&quot;,&quot;SubOptions&quot;:[{&quot;FieldId&quot;:&quot;description&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;quantity&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;unit-price&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;line-amount&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;item-po-no&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;line-no&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;part-no&quot;,&quot;SubOptions&quot;:null}]}]}]}}">
+    <p1:DataExtractionScope ClassificationResult="{x:Null}" DisplayName="Data Extraction Scope" DocumentObjectModel="[DOM]" DocumentPath="[DocPath]" DocumentText="[Doctext]" DocumentTypeId="TestInvoice.NoCategory.FoodOrder" ExtractionResult="[ExtractionResults]" FormatValuesIfPossible="True" sap:VirtualizedContainerService.HintSize="477.6,490.4" sap2010:WorkflowViewState.IdRef="DataExtractionScope_1" Taxonomy="[Taxonomy]" TaxonomyConfiguration="{}{&quot;TaxonomyMappings&quot;:{&quot;UIe2de63aa7674458fa15fabc396f10f70&quot;:{&quot;DocumentTypeMappings&quot;:{&quot;TestInvoice.NoCategory.FoodOrder&quot;:{&quot;FieldMappings&quot;:{&quot;TestInvoice.NoCategory.FoodOrder.No&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.No&quot;,&quot;ExtractorTaxonomyFieldId&quot;:null,&quot;ShouldExtract&quot;:true},&quot;TestInvoice.NoCategory.FoodOrder.TableNo&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.TableNo&quot;,&quot;ExtractorTaxonomyFieldId&quot;:null,&quot;ShouldExtract&quot;:true},&quot;TestInvoice.NoCategory.FoodOrder.Date&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Date&quot;,&quot;ExtractorTaxonomyFieldId&quot;:null,&quot;ShouldExtract&quot;:true},&quot;TestInvoice.NoCategory.FoodOrder.Order&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Order&quot;,&quot;ExtractorTaxonomyFieldId&quot;:null,&quot;ShouldExtract&quot;:true},&quot;TestInvoice.NoCategory.FoodOrder.Order.Description&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Order.Description&quot;,&quot;ExtractorTaxonomyFieldId&quot;:null,&quot;ShouldExtract&quot;:true},&quot;TestInvoice.NoCategory.FoodOrder.Order.Quantity&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Order.Quantity&quot;,&quot;ExtractorTaxonomyFieldId&quot;:null,&quot;ShouldExtract&quot;:true},&quot;TestInvoice.NoCategory.FoodOrder.Order.Price&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Order.Price&quot;,&quot;ExtractorTaxonomyFieldId&quot;:null,&quot;ShouldExtract&quot;:true},&quot;TestInvoice.NoCategory.FoodOrder.Orderer&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Orderer&quot;,&quot;ExtractorTaxonomyFieldId&quot;:null,&quot;ShouldExtract&quot;:true},&quot;TestInvoice.NoCategory.FoodOrder.TotalPrice&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.TotalPrice&quot;,&quot;ExtractorTaxonomyFieldId&quot;:null,&quot;ShouldExtract&quot;:true}},&quot;ExtractorDocumentTypeId&quot;:null}}}},&quot;ExtractorMinimumConfidence&quot;:{&quot;UIe2de63aa7674458fa15fabc396f10f70&quot;:&quot;0&quot;},&quot;ExtractorsAliases&quot;:{},&quot;DocumentTypeOptionsByExtractor&quot;:{&quot;UIe2de63aa7674458fa15fabc396f10f70&quot;:[]}}">
       <p1:DataExtractionScope.Extractors>
-        <p1:IntelligentFormExtractor SerializedSignatureFields="{x:Null}" ApiKey="HqVJG8szmPmJw2bdNPdddrLBTPLGuen/08Z7Qu/vzKvs1ngaEpjy/W2sVMqchNNeqmssUhO1W/F2RyiUqxB9og==" DisplayName="Intelligent Form Extractor" Endpoint="https://du.uipath.com/svc/intelligentforms" sap:VirtualizedContainerService.HintSize="233.6,195.2" sap2010:WorkflowViewState.IdRef="IntelligentFormExtractor_1" MinOverlapPercentage="65" PersistenceId="UIe2de63aa7674458fa15fabc396f10f70" SerializedSettings="{}{&quot;DocTypeSettings&quot;:[{&quot;DocumentTypeId&quot;:&quot;TestInvoice.NoCategory.FoodOrder&quot;,&quot;SignatureFields&quot;:[],&quot;HandwritingFields&quot;:[{&quot;FieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.No&quot;},{&quot;FieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.TableNo&quot;},{&quot;FieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Date&quot;},{&quot;FieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Orderer&quot;},{&quot;FieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.TotalPrice&quot;},{&quot;FieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Order.Description&quot;},{&quot;FieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Order.Quantity&quot;},{&quot;FieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Order.Price&quot;}],&quot;BooleanSynonymsForYes&quot;:[],&quot;BooleanSynonymsForNo&quot;:[],&quot;CaseSensitiveSynonyms&quot;:false}]}" SerializedTemplates="[{&quot;DocumentTypeId&quot;:&quot;TestInvoice.NoCategory.FoodOrder&quot;,&quot;FormId&quot;:&quot;fac29a31&quot;,&quot;FormName&quot;:&quot;FoodOrderTemp&quot;,&quot;OriginalFileExtension&quot;:&quot;jpg&quot;,&quot;Pages&quot;:[{&quot;Page&quot;:0,&quot;Size&quot;:[0.0,0.0,720.0,891.0],&quot;SkewAngle&quot;:1.9,&quot;Evidence&quot;:[{&quot;Text&quot;:&quot;LADÍ&quot;,&quot;Box&quot;:[83.9066,41.5747,45.7378,24.4793]},{&quot;Text&quot;:&quot;TABLE&quot;,&quot;Box&quot;:[152.4612,39.3293,63.6664,20.998]},{&quot;Text&quot;:&quot;NO.&quot;,&quot;Box&quot;:[158.0033,113.5207,30.5851,17.0949]},{&quot;Text&quot;:&quot;FOOD&quot;,&quot;Box&quot;:[72.3878,493.4919,61.4969,20.0126]},{&quot;Text&quot;:&quot;ORDER&quot;,&quot;Box&quot;:[66.4054,565.3528,79.5533,22.6083]},{&quot;Text&quot;:&quot;DATE&quot;,&quot;Box&quot;:[155.5267,413.1899,48.4046,16.5832]}],&quot;Fields&quot;:[{&quot;Field&quot;:&quot;TestInvoice.NoCategory.FoodOrder.No&quot;,&quot;Box&quot;:[63.7638,112.4723,82.3616,47.8229]},{&quot;Field&quot;:&quot;TestInvoice.NoCategory.FoodOrder.TableNo&quot;,&quot;Box&quot;:[124.8708,170.9225,118.6716,46.0517]},{&quot;Field&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Date&quot;,&quot;Box&quot;:[108.0443,454.3173,208.1181,48.7085]},{&quot;Field&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Orderer&quot;,&quot;Box&quot;:[793.492,154.6292,233.9784,37.64]},{&quot;Field&quot;:&quot;TestInvoice.NoCategory.FoodOrder.TotalPrice&quot;,&quot;Box&quot;:[768.0596,585.9633,113.9373,48.8303]}],&quot;Tables&quot;:[{&quot;FieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Order&quot;,&quot;Headers&quot;:[{&quot;FieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Order.Description&quot;,&quot;Box&quot;:[185.0923,25.6827,378.155,57.5646]},{&quot;FieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Order.Quantity&quot;,&quot;Box&quot;:[191.2915,411.8081,117.786,43.3948]},{&quot;FieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Order.Price&quot;,&quot;Box&quot;:[187.7491,544.6494,139.9262,40.738]}],&quot;Cells&quot;:[{&quot;Row&quot;:0,&quot;Column&quot;:0,&quot;Box&quot;:[250.6273,28.3395,363.0996,51.3653]},{&quot;Row&quot;:0,&quot;Column&quot;:1,&quot;Box&quot;:[251.5129,418.893,110.7011,45.1661]},{&quot;Row&quot;:0,&quot;Column&quot;:2,&quot;Box&quot;:[244.428,549.9631,131.0701,44.2804]},{&quot;Row&quot;:1,&quot;Column&quot;:0,&quot;Box&quot;:[317.9336,29.2251,364.8708,48.7085]},{&quot;Row&quot;:1,&quot;Column&quot;:1,&quot;Box&quot;:[316.1624,418.893,119.5572,46.0517]},{&quot;Row&quot;:1,&quot;Column&quot;:2,&quot;Box&quot;:[306.4207,556.1624,110.7011,46.0517]},{&quot;Row&quot;:2,&quot;Column&quot;:0,&quot;Box&quot;:[378.4346,34.5881,353.0022,56.9687]},{&quot;Row&quot;:2,&quot;Column&quot;:1,&quot;Box&quot;:[376.4001,430.3168,100.7124,49.8476]},{&quot;Row&quot;:2,&quot;Column&quot;:2,&quot;Box&quot;:[371.3136,564.6001,126.1449,48.8303]},{&quot;Row&quot;:3,&quot;Column&quot;:0,&quot;Box&quot;:[449.6455,33.5708,372.3309,44.7611]},{&quot;Row&quot;:3,&quot;Column&quot;:1,&quot;Box&quot;:[441.5071,437.4379,111.9027,49.8476]},{&quot;Row&quot;:3,&quot;Column&quot;:2,&quot;Box&quot;:[432.3514,565.6174,133.266,47.813]},{&quot;Row&quot;:4,&quot;Column&quot;:0,&quot;Box&quot;:[513.7352,62.0551,211.5979,50.8649]},{&quot;Row&quot;:4,&quot;Column&quot;:1,&quot;Box&quot;:[508.6487,448.6282,93.5914,41.7092]},{&quot;Row&quot;:4,&quot;Column&quot;:2,&quot;Box&quot;:[499.493,578.8422,99.6951,49.8476]},{&quot;Row&quot;:5,&quot;Column&quot;:0,&quot;Box&quot;:[584.946,71.2108,262.4627,46.7957]},{&quot;Row&quot;:5,&quot;Column&quot;:1,&quot;Box&quot;:[570.7039,434.386,111.9027,49.8476]},{&quot;Row&quot;:5,&quot;Column&quot;:2,&quot;Box&quot;:[568.6693,576.8076,123.093,40.6919]}]}]}],&quot;AnchorBasedConfiguration&quot;:{&quot;AnchorBasedFieldConfiguration&quot;:[]}}]" Timeout="100000">
+        <p1:IntelligentFormExtractor SerializedSignatureFields="{x:Null}" ApiKey="HqVJG8szmPmJw2bdNPdddrLBTPLGuen/08Z7Qu/vzKvs1ngaEpjy/W2sVMqchNNeqmssUhO1W/F2RyiUqxB9og==" DisplayName="Intelligent Form Extractor" Endpoint="https://du.uipath.com/svc/intelligentforms" sap:VirtualizedContainerService.HintSize="233.6,164" sap2010:WorkflowViewState.IdRef="IntelligentFormExtractor_1" MinOverlapPercentage="65" PersistenceId="UIe2de63aa7674458fa15fabc396f10f70" SerializedSettings="{}{&quot;DocTypeSettings&quot;:[{&quot;DocumentTypeId&quot;:&quot;TestInvoice.NoCategory.FoodOrder&quot;,&quot;SignatureFields&quot;:[],&quot;HandwritingFields&quot;:[{&quot;FieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.No&quot;},{&quot;FieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.TableNo&quot;},{&quot;FieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Date&quot;},{&quot;FieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Orderer&quot;},{&quot;FieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.TotalPrice&quot;},{&quot;FieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Order.Description&quot;},{&quot;FieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Order.Quantity&quot;},{&quot;FieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Order.Price&quot;}],&quot;BooleanSynonymsForYes&quot;:[],&quot;BooleanSynonymsForNo&quot;:[],&quot;CaseSensitiveSynonyms&quot;:false}]}" SerializedTemplates="[{&quot;DocumentTypeId&quot;:&quot;TestInvoice.NoCategory.FoodOrder&quot;,&quot;FormId&quot;:&quot;448ecf08&quot;,&quot;FormName&quot;:&quot;FoodOrder&quot;,&quot;OriginalFileExtension&quot;:&quot;jpg&quot;,&quot;Pages&quot;:[{&quot;Page&quot;:0,&quot;Size&quot;:[0.0,0.0,720.0,855.0],&quot;SkewAngle&quot;:-0.1,&quot;Evidence&quot;:[{&quot;Text&quot;:&quot;เล่มที่&quot;,&quot;Box&quot;:[50.9318,56.9085,50.9633,24.9144]},{&quot;Text&quot;:&quot;เลขที่&quot;,&quot;Box&quot;:[102.8305,48.7706,52.0488,30.0907]},{&quot;Text&quot;:&quot;ใบสั่งอาหาร&quot;,&quot;Box&quot;:[33.8464,481.9375,149.9351,42.7416]},{&quot;Text&quot;:&quot;FOOD&quot;,&quot;Box&quot;:[81.6927,483.8519,59.9737,22.8987]},{&quot;Text&quot;:&quot;ORDER&quot;,&quot;Box&quot;:[74.848,555.8622,76.9737,24.8691]}],&quot;Fields&quot;:[{&quot;Field&quot;:&quot;TestInvoice.NoCategory.FoodOrder.No&quot;,&quot;Box&quot;:[84.1328,100.9594,169.1513,38.0812]},{&quot;Field&quot;:&quot;TestInvoice.NoCategory.FoodOrder.TableNo&quot;,&quot;Box&quot;:[139.9262,169.1513,140.8118,42.5092]},{&quot;Field&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Date&quot;,&quot;Box&quot;:[119.5572,466.7159,190.4059,51.3653]},{&quot;Field&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Orderer&quot;,&quot;Box&quot;:[749.2251,140.8118,234.6863,75.2768]},{&quot;Field&quot;:&quot;TestInvoice.NoCategory.FoodOrder.TotalPrice&quot;,&quot;Box&quot;:[743.0258,549.0775,121.3284,49.5941]}],&quot;Tables&quot;:[{&quot;FieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Order&quot;,&quot;Headers&quot;:[{&quot;FieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Order.Description&quot;,&quot;Box&quot;:[205.4613,43.3948,347.1587,45.1661]},{&quot;FieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Order.Quantity&quot;,&quot;Box&quot;:[203.69,401.1808,115.1292,43.3948]},{&quot;FieldId&quot;:&quot;TestInvoice.NoCategory.FoodOrder.Order.Price&quot;,&quot;Box&quot;:[201.9188,527.8229,145.2399,40.738]}],&quot;Cells&quot;:[{&quot;Row&quot;:0,&quot;Column&quot;:0,&quot;Box&quot;:[263.0258,37.1956,352.4723,46.0517]},{&quot;Row&quot;:0,&quot;Column&quot;:1,&quot;Box&quot;:[254.1697,403.8376,109.8155,55.7934]},{&quot;Row&quot;:0,&quot;Column&quot;:2,&quot;Box&quot;:[255.0554,541.107,122.214,47.8229]},{&quot;Row&quot;:1,&quot;Column&quot;:0,&quot;Box&quot;:[319.7048,38.9668,346.2731,53.1365]},{&quot;Row&quot;:1,&quot;Column&quot;:1,&quot;Box&quot;:[319.7048,409.1513,102.7306,49.5941]},{&quot;Row&quot;:1,&quot;Column&quot;:2,&quot;Box&quot;:[317.9336,542.8782,121.3284,50.4797]},{&quot;Row&quot;:2,&quot;Column&quot;:0,&quot;Box&quot;:[382.583,48.7085,339.1882,45.1661]},{&quot;Row&quot;:2,&quot;Column&quot;:1,&quot;Box&quot;:[381.6974,411.8081,100.9594,44.2804]},{&quot;Row&quot;:2,&quot;Column&quot;:2,&quot;Box&quot;:[377.2694,541.9926,117.786,51.3653]}]}]}],&quot;AnchorBasedConfiguration&quot;:{&quot;AnchorBasedFieldConfiguration&quot;:[]}}]" Timeout="100000">
           <p1:IntelligentFormExtractor.DocumentBounds>
-            <InArgument x:TypeArguments="p3:ResultsDocumentBounds">
-              <DelegateArgumentValue x:TypeArguments="p3:ResultsDocumentBounds">
-                <DelegateInArgument x:TypeArguments="p3:ResultsDocumentBounds" Name="DocumentBounds" />
+            <InArgument x:TypeArguments="p2:ResultsDocumentBounds">
+              <DelegateArgumentValue x:TypeArguments="p2:ResultsDocumentBounds">
+                <DelegateInArgument x:TypeArguments="p2:ResultsDocumentBounds" Name="DocumentBounds" />
               </DelegateArgumentValue>
             </InArgument>
           </p1:IntelligentFormExtractor.DocumentBounds>
           <p1:IntelligentFormExtractor.DocumentObjectModel>
-            <InArgument x:TypeArguments="p4:Document">
-              <DelegateArgumentValue x:TypeArguments="p4:Document">
-                <DelegateInArgument x:TypeArguments="p4:Document" Name="DocumentObjectModel" />
+            <InArgument x:TypeArguments="p3:Document">
+              <DelegateArgumentValue x:TypeArguments="p3:Document">
+                <DelegateInArgument x:TypeArguments="p3:Document" Name="DocumentObjectModel" />
               </DelegateArgumentValue>
             </InArgument>
           </p1:IntelligentFormExtractor.DocumentObjectModel>
@@ -154,72 +151,25 @@
             </InArgument>
           </p1:IntelligentFormExtractor.DocumentText>
           <p1:IntelligentFormExtractor.ExtractorDocumentType>
-            <InArgument x:TypeArguments="p2:ExtractorDocumentType">
-              <DelegateArgumentValue x:TypeArguments="p2:ExtractorDocumentType">
-                <DelegateInArgument x:TypeArguments="p2:ExtractorDocumentType" Name="ExtractorDocumentType" />
+            <InArgument x:TypeArguments="p4:ExtractorDocumentType">
+              <DelegateArgumentValue x:TypeArguments="p4:ExtractorDocumentType">
+                <DelegateInArgument x:TypeArguments="p4:ExtractorDocumentType" Name="ExtractorDocumentType" />
               </DelegateArgumentValue>
             </InArgument>
           </p1:IntelligentFormExtractor.ExtractorDocumentType>
           <p1:IntelligentFormExtractor.ExtractorResult>
-            <OutArgument x:TypeArguments="p2:ExtractorResult">
-              <DelegateArgumentReference x:TypeArguments="p2:ExtractorResult">
-                <DelegateOutArgument x:TypeArguments="p2:ExtractorResult" Name="ExtractorResult" />
+            <OutArgument x:TypeArguments="p4:ExtractorResult">
+              <DelegateArgumentReference x:TypeArguments="p4:ExtractorResult">
+                <DelegateOutArgument x:TypeArguments="p4:ExtractorResult" Name="ExtractorResult" />
               </DelegateArgumentReference>
             </OutArgument>
           </p1:IntelligentFormExtractor.ExtractorResult>
         </p1:IntelligentFormExtractor>
-        <p5:MachineLearningExtractor SelectedMLSkill="{x:Null}" ApiKey="HqVJG8szmPmJw2bdNPdddrLBTPLGuen/08Z7Qu/vzKvs1ngaEpjy/W2sVMqchNNeqmssUhO1W/F2RyiUqxB9og==" Configuration="{}{&quot;Endpoint&quot;:&quot;https://du.uipath.com/ie/invoices&quot;,&quot;ApiKey&quot;:&quot;&quot;,&quot;AvailableMLSkills&quot;:[]}" DisplayName="Machine Learning Extractor" Endpoint="https://du.uipath.com/ie/invoices" sap:VirtualizedContainerService.HintSize="233.6,195.2" sap2010:WorkflowViewState.IdRef="MachineLearningExtractor_1" PersistenceId="UI0a7e32e6c01343539d9d8ef4091942ba" RetryOnFailure="True" Timeout="100000" UseServerSideOCR="False">
-          <p5:MachineLearningExtractor.AvailableMLSkills>
-            <sc:BindingList x:TypeArguments="x:String" AllowEdit="True" AllowNew="False" AllowRemove="True" RaiseListChangedEvents="True" />
-          </p5:MachineLearningExtractor.AvailableMLSkills>
-          <p5:MachineLearningExtractor.DocumentBounds>
-            <InArgument x:TypeArguments="p3:ResultsDocumentBounds">
-              <DelegateArgumentValue x:TypeArguments="p3:ResultsDocumentBounds">
-                <DelegateInArgument x:TypeArguments="p3:ResultsDocumentBounds" Name="DocumentBounds" />
-              </DelegateArgumentValue>
-            </InArgument>
-          </p5:MachineLearningExtractor.DocumentBounds>
-          <p5:MachineLearningExtractor.DocumentObjectModel>
-            <InArgument x:TypeArguments="p4:Document">
-              <DelegateArgumentValue x:TypeArguments="p4:Document">
-                <DelegateInArgument x:TypeArguments="p4:Document" Name="DocumentObjectModel" />
-              </DelegateArgumentValue>
-            </InArgument>
-          </p5:MachineLearningExtractor.DocumentObjectModel>
-          <p5:MachineLearningExtractor.DocumentPath>
-            <InArgument x:TypeArguments="x:String">
-              <DelegateArgumentValue x:TypeArguments="x:String">
-                <DelegateInArgument x:TypeArguments="x:String" Name="DocumentPath" />
-              </DelegateArgumentValue>
-            </InArgument>
-          </p5:MachineLearningExtractor.DocumentPath>
-          <p5:MachineLearningExtractor.DocumentText>
-            <InArgument x:TypeArguments="x:String">
-              <DelegateArgumentValue x:TypeArguments="x:String">
-                <DelegateInArgument x:TypeArguments="x:String" Name="DocumentText" />
-              </DelegateArgumentValue>
-            </InArgument>
-          </p5:MachineLearningExtractor.DocumentText>
-          <p5:MachineLearningExtractor.ExtractorDocumentType>
-            <InArgument x:TypeArguments="p2:ExtractorDocumentType">
-              <DelegateArgumentValue x:TypeArguments="p2:ExtractorDocumentType">
-                <DelegateInArgument x:TypeArguments="p2:ExtractorDocumentType" Name="ExtractorDocumentType" />
-              </DelegateArgumentValue>
-            </InArgument>
-          </p5:MachineLearningExtractor.ExtractorDocumentType>
-          <p5:MachineLearningExtractor.ExtractorResult>
-            <OutArgument x:TypeArguments="p2:ExtractorResult">
-              <DelegateArgumentReference x:TypeArguments="p2:ExtractorResult">
-                <DelegateOutArgument x:TypeArguments="p2:ExtractorResult" Name="ExtractorResult" />
-              </DelegateArgumentReference>
-            </OutArgument>
-          </p5:MachineLearningExtractor.ExtractorResult>
-        </p5:MachineLearningExtractor>
       </p1:DataExtractionScope.Extractors>
     </p1:DataExtractionScope>
-    <p:PresentValidationStation AutomaticExtractionResults="[ExtractionResults]" DisplayName="Present Validation Station" DocumentObjectModel="[DOM]" DocumentPath="[DocPath]" DocumentText="[Doctext]" sap:VirtualizedContainerService.HintSize="608.8,372" sap2010:WorkflowViewState.IdRef="PresentValidationStation_1" ShowOnlyRelevantPageRange="False" Taxonomy="[Taxonomy]" ValidatedExtractionResults="[ValidatedResults]" />
-    <p1:ExportExtractionResults DataSet="[Dataset]" DisplayName="Export Extraction Results" ExtractionResult="[ValidatedResults]" sap:VirtualizedContainerService.HintSize="608.8,176.8" sap2010:WorkflowViewState.IdRef="ExportExtractionResults_1" IncludeConfidence="False" IncludeOCRConfidence="False" />
-    <ui:ForEach x:TypeArguments="sd1:DataTable" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="608.8,333.6" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[Dataset.Tables]">
+    <p:PresentValidationStation AutomaticExtractionResults="[ExtractionResults]" DisplayName="Present Validation Station" DocumentObjectModel="[DOM]" DocumentPath="[DocPath]" DocumentText="[Doctext]" sap:VirtualizedContainerService.HintSize="477.6,372" sap2010:WorkflowViewState.IdRef="PresentValidationStation_1" ShowOnlyRelevantPageRange="False" Taxonomy="[Taxonomy]" ValidatedExtractionResults="[ValidatedResults]" />
+    <p1:ExportExtractionResults DataSet="[Dataset]" DisplayName="Export Extraction Results" ExtractionResult="[ValidatedResults]" sap:VirtualizedContainerService.HintSize="477.6,176.8" sap2010:WorkflowViewState.IdRef="ExportExtractionResults_1" IncludeConfidence="False" IncludeOCRConfidence="False" />
+    <ui:ForEach x:TypeArguments="sd1:DataTable" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="477.6,333.6" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[Dataset.Tables]">
       <ui:ForEach.Body>
         <ActivityAction x:TypeArguments="sd1:DataTable">
           <ActivityAction.Argument>
@@ -231,7 +181,7 @@
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ui:WriteRange AddHeaders="True" DataTable="[item]" DisplayName="Write Range" sap:VirtualizedContainerService.HintSize="333.6,116" sap2010:WorkflowViewState.IdRef="WriteRange_1" SheetName="Sheet1" WorkbookPath="Report.xlsx">
+            <ui:WriteRange AddHeaders="True" DataTable="[item]" DisplayName="Write Range" sap:VirtualizedContainerService.HintSize="333.6,116" sap2010:WorkflowViewState.IdRef="WriteRange_1" SheetName="Sheet1" WorkbookPath="Result.xlsx">
               <ui:WriteRange.StartingCell>
                 <InArgument x:TypeArguments="x:String">
                   <Literal x:TypeArguments="x:String" Value="" />
